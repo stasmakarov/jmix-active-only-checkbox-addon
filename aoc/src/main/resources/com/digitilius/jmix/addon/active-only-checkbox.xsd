@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:layout="http://jmix.io/schema/flowui/layout"
+           targetNamespace="http://digitilius.com/schema/active-only-checkbox"
+           xmlns="http://digitilius.com/schema/active-only-checkbox"
+           elementFormDefault="qualified">
+
+    <xs:element name="activeOnlyCheckbox">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="layout:checkboxComponent">
+
+                    <xs:attribute name="active" type="xs:string"/>
+                    <xs:attribute name="orderBy" type="xs:string"/>
+                    <xs:attribute name="dataLoader" type="xs:string"/>
+                    <xs:attribute name="initialValue" type="xs:boolean"/>
+
+                    <xs:attribute name="label" type="xs:string"/>
+                    <xs:attribute name="enabled" type="xs:boolean"/>
+                    <xs:attribute name="classNames" type="xs:string"/>
+                    <xs:attribute name="css" type="xs:string"/>
+                    <xs:attribute name="helperText" type="xs:string"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
