@@ -10,16 +10,12 @@
             <xs:complexContent>
                 <xs:extension base="layout:checkboxComponent">
 
-                    <xs:attribute name="active" type="xs:string"/>
-                    <xs:attribute name="orderBy" type="xs:string"/>
+                    <xs:attribute name="activeField" type="xs:string"/>
+                    <xs:attribute name="orderByField" type="xs:string"/>
+                    <xs:attribute name="orderDirection" type="xs:string"/>
                     <xs:attribute name="dataLoader" type="xs:string"/>
                     <xs:attribute name="initialValue" type="xs:boolean"/>
 
-                    <xs:attribute name="label" type="xs:string"/>
-                    <xs:attribute name="enabled" type="xs:boolean"/>
-                    <xs:attribute name="classNames" type="xs:string"/>
-                    <xs:attribute name="css" type="xs:string"/>
-                    <xs:attribute name="helperText" type="xs:string"/>
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>

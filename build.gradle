@@ -8,7 +8,7 @@ buildscript {
 }
 
 group = 'com.digitilius.jmix'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 subprojects {
     apply plugin: 'java-library'
@@ -30,40 +30,62 @@ subprojects {
     group = this.group
     version = this.version
 
-    def props = new Properties()
-    buildFile.withInputStream { props.load(it) }
-    def subArchivesBaseName = props.getProperty('archivesBaseName')
-    def archName = subArchivesBaseName.substring(1, subArchivesBaseName.length() - 1)
+    def archName = null
+    if (project.hasProperty('archivesBaseName')) {
+        archName = project.property('archivesBaseName').toString()
+    } else {
+        archName = project.name
+    }
 
     java {
         withSourcesJar()
     }
 
-    artifacts {
-        archives sourcesJar
-    }
-
-    publishing {
-        repositories {
-            maven {
-                url = 'https://myrepo/releases/'
-                credentials {
-                    username rootProject.hasProperty('uploadUser') ? rootProject['uploadUser'] : 'admin'
-                    password rootProject.hasProperty('uploadPassword') ? rootProject['uploadPassword'] : 'admin'
+    if (project.plugins.hasPlugin('java') || project.plugins.hasPlugin('java-library')) {
+        publishing {
+            repositories {
+                maven {
+                    // --- ЗАМЕНИТЕ OWNER и REPO на ваши значения ---
+                    url = uri("https://maven.pkg.github.com/stasmakarov/REPO")
+                    credentials {
+                        username = project.findProperty('gpr.user') ?: System.getenv('GPR_USER') ?: System.getenv('GITHUB_ACTOR')
+                        password = project.findProperty('gpr.token') ?: System.getenv('GPR_TOKEN') ?: System.getenv('GITHUB_TOKEN')
+                    }
                 }
-                allowInsecureProtocol = true
             }
-        }
-        publications {
-            javaMaven(MavenPublication) {
-                artifactId = archName
-                from components.java
+            publications {
+                javaMaven(MavenPublication) {
+                    artifactId = archName
+                    from components.java
+
+                    artifact tasks.named('sourcesJar').get()
+
+                    // minimal pom metadata — заполните под ваш проект
+                    pom {
+                        name = project.name
+                        description = 'Jmix add-on: Active-only checkbox'
+                        url = 'https://github.com/OWNER/REPO'
+                        licenses {
+                            license {
+                                name = 'The Apache License, Version 2.0'
+                                url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            }
+                        }
+                        developers {
+                            developer {
+                                id = 'your-id'
+                                name = 'Your Name'
+                                email = 'you@example.com'
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
     // remove after https://youtrack.jetbrains.com/issue/IDEA-227215 is fixed
-    tasks.withType(GenerateModuleMetadata) {
+    tasks.withType(GenerateModuleMetadata).configureEach {
         enabled = false
     }
 

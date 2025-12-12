@@ -1,6 +1,7 @@
 package com.digitilius.jmix.addon;
 
 import io.jmix.core.annotation.JmixModule;
+import io.jmix.core.annotation.MessageSourceBasenames;
 import io.jmix.core.impl.scanning.AnnotationScanMetadataReaderFactory;
 import io.jmix.eclipselink.EclipselinkConfiguration;
 import io.jmix.flowui.FlowuiConfiguration;
@@ -19,6 +20,7 @@ import java.util.Collections;
 @ComponentScan
 @ConfigurationPropertiesScan
 @JmixModule(dependsOn = {EclipselinkConfiguration.class, FlowuiConfiguration.class})
+@MessageSourceBasenames("com/digitilius/jmix/addon/messages")
 @PropertySource(name = "com.digitilius.jmix.addon", value = "classpath:/com/digitilius/jmix/addon/module.properties")
 public class AocConfiguration {
 
@@ -39,4 +41,5 @@ public class AocConfiguration {
         actions.setBasePackages(Collections.singletonList("com.digitilius.jmix.addon"));
         return actions;
     }
+
 }

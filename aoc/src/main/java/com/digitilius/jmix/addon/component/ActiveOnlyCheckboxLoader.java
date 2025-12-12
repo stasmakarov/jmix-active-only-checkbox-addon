@@ -1,13 +1,15 @@
 package com.digitilius.jmix.addon.component;
 
-import io.jmix.flowui.data.SupportsValueSource;
+import io.jmix.flowui.exception.GuiDevelopmentException;
+import io.jmix.flowui.model.CollectionLoader;
+import io.jmix.flowui.model.DataLoader;
 import io.jmix.flowui.xml.layout.loader.AbstractComponentLoader;
 import io.jmix.flowui.xml.layout.support.DataLoaderSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 
-public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnlyCheckbox>
-{
-
+public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnlyCheckbox> {
     protected DataLoaderSupport dataLoaderSupport;
 
     @Override
@@ -21,16 +23,13 @@ public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnly
 
         getDataLoaderSupport().loadData(resultComponent, element);
 
-        loadString(element, "active", resultComponent::setActive);
-        loadString(element, "orderBy", resultComponent::setOrderBy);
-        loadString(element, "dataLoader", resultComponent::setLoaderId);
+        loadString(element, "activeField", resultComponent::setActiveField);
+        loadString(element, "orderByField", resultComponent::setOrderByField);
+        loadString(element, "orderDirection", resultComponent::setOrderDirection);
         loadBoolean(element, "initialValue", resultComponent::setInitialValue);
+        loadString(element, "dataLoader", resultComponent::setDataLoader);
 
-        componentLoader().loadLabel(resultComponent, element);
-        componentLoader().loadEnabled(resultComponent, element);
-        componentLoader().loadClassNames(resultComponent, element);
-        componentLoader().loadCss(resultComponent, element);
-        componentLoader().loadHelperText(resultComponent, element);
+        loadLoader(resultComponent.getDataLoader());
     }
 
     protected DataLoaderSupport getDataLoaderSupport() {
@@ -39,4 +38,14 @@ public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnly
         }
         return dataLoaderSupport;
     }
+
+    protected void loadLoader(@NonNull String loaderId) {
+        DataLoader loader = context.getDataHolder().getLoader(loaderId);
+        if (loader instanceof CollectionLoader<?>) {
+            resultComponent.setLoader((CollectionLoader<?>) loader);
+        } else {
+            throw new GuiDevelopmentException("Not supported loader type: %", loaderId);
+        }
+    }
+
 }

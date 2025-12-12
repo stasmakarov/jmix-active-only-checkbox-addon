@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve"
+     fill="none"
+     stroke="#9AA7B0"
+     stroke-width="12"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     height="16px" width="16px"
+     viewBox="-25.6 -25.6 307.20 307.20">
+
+    <rect x="40" y="40" width="176" height="176" rx="24" ry="24" fill="none"/>
+
+    <path d="M78 130 L116 168 L200 84" fill="none"/>
+</svg>
