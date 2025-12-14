@@ -39,14 +39,18 @@ subprojects {
     publishing {
         repositories {
             maven {
-                url = uri("https://maven.pkg.github.com/stasmakarov/active-only-checkbox-jmix")
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/" +
+                        (System.getenv("GITHUB_REPOSITORY")
+                                ?: "stasmakarov/active-only-checkbox-jmix"))
+
                 credentials {
-                    username = project.findProperty('gpr.user')
-                            ?: System.getenv('GPR_USER')
-                            ?: System.getenv('GITHUB_ACTOR')
-                    password = project.findProperty('gpr.token')
-                            ?: System.getenv('GPR_TOKEN')
-                            ?: System.getenv('GITHUB_TOKEN')
+                    username = project.findProperty("gpr.user")
+                            ?: System.getenv("GITHUB_USERNAME")
+                            ?: System.getenv("GITHUB_ACTOR")
+
+                    password = project.findProperty("gpr.key")
+                            ?: System.getenv("GITHUB_TOKEN")
                 }
             }
         }
@@ -60,12 +64,14 @@ subprojects {
                     name = project.name
                     description = 'Jmix add-on: Active-only checkbox'
                     url = 'https://github.com/stasmakarov/active-only-checkbox-jmix'
+
                     licenses {
                         license {
-                            name = 'The Apache License, Version 2.0'
-                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            name = 'Apache License, Version 2.0'
+                            url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                         }
                     }
+
                     developers {
                         developer {
                             id = 'stasmakarov'

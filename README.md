@@ -7,11 +7,11 @@
 This addon provides a custom checkbox that can filter the content of the datagrid by the boolean _active_ field.
 For example, add it to the standard _user list view_, and you will be able easily switch between viewing all users or only active:
 
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 Just one click — and inactive records are hidden:
 
-![img_3.png](img_3.png)
+![img_3.png](images/img_3.png)
 
 In many enterprise systems, domain entities contain a boolean attribute that indicates whether a record is currently 
 active or no longer in use. This may represent different business conditions—for example, an employee who has left 
@@ -70,18 +70,18 @@ The loader is re-executed on checkbox toggle.
 
 If the loader isn't set, an exception will be thrown:
 
-![img_4.png](img_4.png)
+![img_4.png](images/img_4.png)
 
 ### Adding component th views
 
 You can add this component to any view from the top menu:
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 And then set up its properties:
 
 
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 
 As well, you can add it directly in XML.
