@@ -5,6 +5,14 @@
            xmlns="http://digitilius.com/schema/active-only-checkbox"
            elementFormDefault="qualified">
 
+    <!-- enum for orderDirection -->
+    <xs:simpleType name="orderDirectionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ASC"/>
+            <xs:enumeration value="DESC"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:element name="activeOnlyCheckbox">
         <xs:complexType>
             <xs:complexContent>
@@ -12,7 +20,7 @@
 
                     <xs:attribute name="activeField" type="xs:string"/>
                     <xs:attribute name="orderByField" type="xs:string"/>
-                    <xs:attribute name="orderDirection" type="xs:string"/>
+                    <xs:attribute name="orderDirection" type="orderDirectionType"/>
                     <xs:attribute name="dataLoader" type="xs:string"/>
                     <xs:attribute name="initialValue" type="xs:boolean"/>
 

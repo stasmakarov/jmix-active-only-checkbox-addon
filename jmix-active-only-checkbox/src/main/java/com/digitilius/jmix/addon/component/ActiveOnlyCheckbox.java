@@ -63,8 +63,8 @@ public class ActiveOnlyCheckbox extends JmixCheckbox {
         return dataLoader;
     }
 
-    public void setOrderDirection(String orderDirection) {
-        this.orderDirection = OrderDirection.valueOf(orderDirection);
+    public void setOrderDirection(OrderDirection orderDirection) {
+        this.orderDirection = orderDirection;
     }
 
     private void applyFilter(boolean activeOnly) {

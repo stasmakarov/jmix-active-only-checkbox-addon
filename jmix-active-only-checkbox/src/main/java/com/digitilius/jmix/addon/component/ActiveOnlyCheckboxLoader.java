@@ -3,7 +3,6 @@ package com.digitilius.jmix.addon.component;
 import io.jmix.core.Messages;
 import io.jmix.core.metamodel.model.MetaClass;
 import io.jmix.core.metamodel.model.MetaProperty;
-import io.jmix.flowui.exception.GuiDevelopmentException;
 import io.jmix.flowui.model.CollectionLoader;
 import io.jmix.flowui.model.DataLoader;
 import io.jmix.flowui.xml.layout.loader.AbstractComponentLoader;
@@ -14,7 +13,9 @@ public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnly
 
     private static final String DEFAULT_ACTIVE_FIELD = "active";
     private static final String DEFAULT_ORDER_BY_FIELD = "name";
-    private static final String DEFAULT_ORDER_DIRECTION = "ASC";
+    private static final OrderDirection DEFAULT_ORDER_DIRECTION = OrderDirection.ASC;
+    private static final String MSG_ACTIVE_ONLY_LABEL = "com.digitilius.jmix.addon/activeOnly.label";
+
 
     @Override
     @NonNull
@@ -35,7 +36,7 @@ public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnly
 
         loadString(element, "activeField", resultComponent::setActiveField);
         loadString(element, "orderByField", resultComponent::setOrderByField);
-        loadString(element, "orderDirection", resultComponent::setOrderDirection);
+        loadEnum(element, OrderDirection.class, "orderDirection", resultComponent::setOrderDirection);
 
         validateAttributes(resultComponent);
 
@@ -46,8 +47,7 @@ public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnly
 
         String label = resultComponent.getLabel();
         if (label == null) {
-            Messages messages = applicationContext.getBean(Messages.class);
-            label = messages.getMessage("activeOnly.label");
+            label = messages().getMessage(MSG_ACTIVE_ONLY_LABEL);
             resultComponent.setLabel(label);
         }
 
@@ -63,7 +63,7 @@ public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnly
         if (loader instanceof CollectionLoader<?>) {
             resultComponent.setLoader((CollectionLoader<?>) loader);
         } else {
-            throw new GuiDevelopmentException("Not supported loader type: %", loaderId);
+            throw new ActiveOnlyCheckboxException(String.format("DataLoader '%s' is not a CollectionLoader", loaderId));
         }
     }
 
@@ -75,8 +75,11 @@ public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnly
         }
         MetaProperty activeProperty = checkProperty(metaClass, component.getActiveField());
         Class<?> type = activeProperty.getJavaType();
-        if (!type.equals(Boolean.class)) {
-            throw new ActiveOnlyCheckboxException("Active field must be 'Boolean'");
+        if (!Boolean.class.isAssignableFrom(type)
+                && !boolean.class.equals(type)) {
+            throw new ActiveOnlyCheckboxException(
+                    "Active field must be boolean or Boolean"
+            );
         }
 
         if (component.getOrderByField() == null) {
@@ -98,5 +101,8 @@ public class ActiveOnlyCheckboxLoader extends AbstractComponentLoader<ActiveOnly
         return metaProperty;
     }
 
+    protected Messages messages() {
+        return applicationContext.getBean(Messages.class);
+    }
 
 }
