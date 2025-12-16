@@ -1,4 +1,4 @@
-archivesBaseName = 'aoc-starter'
+archivesBaseName = 'jmix-active-only-checkbox-starter'
 
 jmix {
     entitiesEnhancing {
@@ -7,7 +7,7 @@ jmix {
 }
 
 dependencies {
-    api project(':aoc')
+    api project(':jmix-active-only-checkbox')
 
     implementation 'io.jmix.core:jmix-core'
     implementation 'io.jmix.data:jmix-data'

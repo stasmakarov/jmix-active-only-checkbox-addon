@@ -76,7 +76,7 @@ subprojects {
                         developer {
                             id = 'stasmakarov'
                             name = 'Stas Makarov'
-                            email = 's.makarov@haulmont.com'
+                            email = 's.makarov15@gmail.com'
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-archivesBaseName = 'aoc'
+archivesBaseName = 'jmix-active-only-checkbox'
 
 dependencies {
     implementation 'io.jmix.core:jmix-core-starter'

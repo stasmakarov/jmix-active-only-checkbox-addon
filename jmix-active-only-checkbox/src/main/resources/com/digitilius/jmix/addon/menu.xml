@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://jmix.io/schema/flowui/menu">
 
-    <menu id="aoc" title="msg://com.digitilius.jmix.addon/menu.addon">
+    <menu id="aoc" title="AOC">
     </menu>
 
 </menu-config>
